@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +34,17 @@ public class TestEmployeeDAO
     @Autowired
     private DepartmentDAO departmentDAO;
    
+    @PersistenceContext
+    private EntityManager manager;
     
     @Test
     public void testVerificarTabla()
     {
-        departmentDAO.getAllDepartments();
+    	
+    	EmployeeEntity em =  manager.find(EmployeeEntity.class, 26) ;
+    	System.out.println("el correo es"+ em.getEmail());
+    	
+    	departmentDAO.getAllDepartments();
         //assertThrows(Exception.class, () -> departmentDAO.validarDepartamento());
         Assert.assertEquals(2, 2);
     }
